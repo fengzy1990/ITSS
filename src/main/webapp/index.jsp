@@ -1,6 +1,11 @@
-<%@ page language="java" pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>IT支撑系统 - 登录</title>
 <%
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
@@ -31,36 +36,8 @@
 	margin-right: auto;
 }
 </style>
-<head>
-
-<title>IT支撑系统 - 登录</title>
-
-<script language="javascript">
-	function validate() {
-		if (document.loginForm.inputName.value == "") {
-			alert('请输入登录名！');
-			document.loginForm.inputName.focus();
-			return false;
-		}
-		if (document.loginForm.inputPassword.value == "") {
-			alert('请输入密码！');
-			document.loginForm.inputPassword.focus();
-			return false;
-		}
-		return true;
-	}
-	 $("#login_btn").click(function(){
-			
-			//发送ajax请求，保存更新的信息
-			$.ajax({
-				url:"${APP_PATH}/checkuser/",
-				type:"post",
-				data:$("#empUpdateModal form").serialize(),
-			});
-		});	
-</script>
-
 </head>
+
 <body>
 	<!-- 搭建显示页面 -->
 	<div class="container">
@@ -75,18 +52,44 @@
 			</div>
 		</div>
 		<div class="col-xs-6 col-md-4 col-center-block">
-			<form name="loginForm" onsubmit="return(validate());">
+			<form method="post" name="loginForm"  id="loginForm">
 				<div class="form-group">
 					<label for="inputName">用户名</label> <input type="text"
-						class="form-control" id="inputName"  placeholder="请输入登录名">
+						class="form-control" name="inputName" placeholder="请输入登录名">
 				</div>
 				<div class="form-group">
 					<label for="inputPassword">密码</label> <input type="password"
-						class="form-control"  id="inputPassword" placeholder="请输入密码" >
+						class="form-control" name="inputPassword" placeholder="请输入密码">
 				</div>
-				<button type="button" id="login_btn" class="btn btn-primary btn-lg">登录</button>
+				<button type="button" id="login_btn" class="btn btn-primary btn-lg"
+					onclick="validate()">登录</button>
 			</form>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		function validate() {
+			if (document.loginForm.inputName.value == "") {
+				alert('请输入登录名！');
+				document.loginForm.inputName.focus();
+				return false;
+			}
+			if (document.loginForm.inputPassword.value == "") {
+				alert('请输入密码！');
+				document.loginForm.inputPassword.focus();
+				return false;
+			}
+
+			return true;
+		}
+		$("#login_btn").click(function() {
+			//发送ajax请求，保存更新的信息
+			$.ajax({
+				url : "${APP_PATH}/checkuser/",
+				type : "POST",
+				data : $("#loginForm").serialize(),
+			});
+		});
+	</script>
 </body>
 </html>
