@@ -52,7 +52,7 @@
 			</div>
 		</div>
 		<div class="col-xs-6 col-md-4 col-center-block">
-			<form method="post" name="loginForm"  id="loginForm">
+			<form method="post" name="loginForm"  id="loginForm" action="checkuser" onsubmit="return(validate());">
 				<div class="form-group">
 					<label for="inputName">用户名</label> <input type="text"
 						class="form-control" name="inputName" placeholder="请输入登录名">
@@ -61,8 +61,8 @@
 					<label for="inputPassword">密码</label> <input type="password"
 						class="form-control" name="inputPassword" placeholder="请输入密码">
 				</div>
-				<button type="button" id="login_btn" class="btn btn-primary btn-lg"
-					onclick="validate()">登录</button>
+				<input type="submit" id="login_btn" class="btn btn-primary btn-lg"
+					/>
 			</form>
 		</div>
 	</div>
@@ -82,14 +82,19 @@
 
 			return true;
 		}
-		$("#login_btn").click(function() {
+		/* $("#login_btn").click(function() {
 			//发送ajax请求，保存更新的信息
 			$.ajax({
 				url : "${APP_PATH}/checkuser/",
 				type : "POST",
 				data : $("#loginForm").serialize(),
+				success:function(data){
+					if(data==0)
+						 window.location.href = "${APP_PATH}/views/aa.jsp";
+					
+				}
 			});
-		});
+		}); */
 	</script>
 </body>
 </html>
