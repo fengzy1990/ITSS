@@ -26,8 +26,10 @@ public class userLoginService {
 		criteria.andUseridEqualTo(name);
 		criteria.andUserpasswordEqualTo(password);
 		long num = uLoginmapper.countByExample(uLoginExample);
-		if (num >= 0) {
+		if (num >0) {
 			flag = true;
+		}else {
+			flag = false;
 		}
 		return flag;
 	}

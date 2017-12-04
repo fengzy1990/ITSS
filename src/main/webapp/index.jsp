@@ -22,79 +22,89 @@
 	rel="stylesheet">
 <script
 	src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<style>
-.center-vertical {
-	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
-}
 
-.col-center-block {
-	float: none;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-</style>
 </head>
-
 <body>
-	<!-- 搭建显示页面 -->
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h1></h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<h1></h1>
-			</div>
-		</div>
-		<div class="col-xs-6 col-md-4 col-center-block">
-			<form method="post" name="loginForm"  id="loginForm" action="checkuser" onsubmit="return(validate());">
-				<div class="form-group">
-					<label for="inputName">用户名</label> <input type="text"
-						class="form-control" name="inputName" placeholder="请输入登录名">
-				</div>
-				<div class="form-group">
-					<label for="inputPassword">密码</label> <input type="password"
-						class="form-control" name="inputPassword" placeholder="请输入密码">
-				</div>
-				<input type="submit" id="login_btn" class="btn btn-primary btn-lg"
-					/>
-			</form>
-		</div>
-	</div>
-
-	<script type="text/javascript">
-		function validate() {
-			if (document.loginForm.inputName.value == "") {
-				alert('请输入登录名！');
-				document.loginForm.inputName.focus();
-				return false;
-			}
-			if (document.loginForm.inputPassword.value == "") {
-				alert('请输入密码！');
-				document.loginForm.inputPassword.focus();
-				return false;
-			}
-
-			return true;
-		}
-		/* $("#login_btn").click(function() {
-			//发送ajax请求，保存更新的信息
-			$.ajax({
-				url : "${APP_PATH}/checkuser/",
-				type : "POST",
-				data : $("#loginForm").serialize(),
-				success:function(data){
-					if(data==0)
-						 window.location.href = "${APP_PATH}/views/aa.jsp";
-					
-				}
-			});
-		}); */
-	</script>
+	<table height="100%" width="100%">
+		<tr>
+			<td align="center">
+				<table width="800" height="662"
+					background="static/img/login/imac1.png" style="margin-top: 40px">
+					<!-- 搭建显示页面 -->
+					<tr>
+						<td align="center" style="margin-top: 0px"><h2>欢迎登录IT系统支撑</h2></td>
+						<td align="center">
+							<form method="post" name="loginForm" id="loginForm"
+								action="checkuser" onsubmit="return(validate());">
+								<table>
+									<tr>
+										<td>
+												<span class="glyphicon glyphicon-star" aria-hidden="true"></span> 用户名：
+										</td>
+										<td>
+												<input type="text" class="form-control" name="inputName"
+													placeholder="请输入登录名">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<span class="glyphicon glyphicon-star" aria-hidden="true"></span> 密码：
+										</td>
+										<td>
+												<input type="password" class="form-control"
+													name="inputPassword" placeholder="请输入密码">
+											</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="form-group">
+												<input type="submit" id="login_btn"
+													class="btn btn-primary btn-lg" value="登陆" />
+											</div>
+										</td>
+										<td>
+											<div class="form-group">
+												<input type="reset" id="login_btn"
+													class="btn btn-primary btn-lg" value="重置" />
+											</div>
+										</td>
+									</tr>
+								</table>
+							</form>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
 </body>
+<script type="text/javascript">
+	function validate() {
+		if (document.loginForm.inputName.value == "") {
+			alert('请输入登录名！');
+			document.loginForm.inputName.focus();
+			return false;
+		}
+		if (document.loginForm.inputPassword.value == "") {
+			alert('请输入密码！');
+			document.loginForm.inputPassword.focus();
+			return false;
+		}
+
+		return true;
+	}
+	/* $("#login_btn").click(function() {
+		//发送ajax请求，保存更新的信息
+		$.ajax({
+			url : "${APP_PATH}/checkuser/",
+			type : "POST",
+			data : $("#loginForm").serialize(),
+			success:function(data){
+				if(data==0)
+					 window.location.href = "${APP_PATH}/views/aa.jsp";
+				
+			}
+		});
+	}); */
+</script>
 </html>
