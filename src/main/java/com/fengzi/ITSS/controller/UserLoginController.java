@@ -1,5 +1,7 @@
 package com.fengzi.ITSS.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +19,14 @@ public class UserLoginController {
 
 	@RequestMapping(value = "/checkuser", method = RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView checkUser(String inputName, String inputPassword, Model model) {
+	public ModelAndView checkUser(String inputName, String inputPassword,HttpSession session, Model model) {
 		ModelAndView mView = new ModelAndView();
 		// 进行校验
 		System.out.println("checkuser" + inputName + inputPassword);
 		if (uLoginService.login(inputName, inputPassword)) {
 			mView.addObject("msg", "success");
-			mView.setViewName("main");
+			session.setAttribute("SESSION_USER",inputName);
+			mView.setViewName("views/main");
 
 		} else {
 			mView.addObject("msg", "fail");

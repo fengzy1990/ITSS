@@ -24,7 +24,33 @@
 	src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
- <%@ include file="inc/top.jsp"%>
- <%@ include file="inc/foot.jsp"%>
+	<table width="100%" height="100">
+		<tr>
+			<td><%@ include file="inc/top.jsp"%></td>
+		</tr>
+		<tr>
+			<td align="center">
+				<table>
+					<tr>
+						<td><h1>请选择要进入的模块</h1></td>
+					</tr>
+					<tr>
+						<td align="center">&nbsp;</td>
+					</tr>
+					<tr>
+						<td><ul>
+								<li><a href="views/usercontacts.jsp">维护厂家联系人</a></li>
+							</ul></td>
+						<td><ul>
+								<li><a href="#">机房设备维护</a></li>
+							</ul></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td align="center"><%@ include file="inc/foot.jsp"%></td>
+		</tr>
+	</table>
 </body>
 </html>
