@@ -44,8 +44,8 @@ public class UserContactsController {
 	}
 
 	/**
-	 * 增加用户
-	 * 保存
+	 * 增加用户 保存
+	 * 
 	 * @param userContacts
 	 * @param bindingResult
 	 * @return
@@ -64,16 +64,15 @@ public class UserContactsController {
 			}
 			return Msg.fail().add("errorFields", map);
 		} else {
-			//System.out.println(userContacts.getUseremail());
-			//System.out.println(userContacts.getUserphone());
+			// System.out.println(userContacts.getUseremail());
+			// System.out.println(userContacts.getUserphone());
 			userContactsService.saveUserContacts(userContacts);
 			return Msg.success();
 		}
 	}
 
 	/**
-	 * 删除操作
-	 * 支持批量删除，根据id来删除，前台用_来分割id参数
+	 * 删除操作 支持批量删除，根据id来删除，前台用_来分割id参数
 	 * 
 	 * @PathVariable用来获取请求URL中动态参数
 	 * @param ids
@@ -88,14 +87,33 @@ public class UserContactsController {
 			for (String id : str_ids) {
 				del_List.add(Integer.parseInt(id));
 			}
-			//System.out.println(del_List.toString());
-			//批量删除
+			// System.out.println(del_List.toString());
+			// 批量删除
 			userContactsService.deleteBatch(del_List);
 		} else {
 			int id = Integer.parseInt(ids);
-			//只删除一个用户
+			// 只删除一个用户
 			userContactsService.deleteUserContacts(id);
 		}
+		return Msg.success();
+	}
+
+	/**
+	 * 根据id查找对应用户全部信息
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/usercontacts/{id}", method = RequestMethod.GET)
+	public Msg getUser(@PathVariable("id") Integer id) {
+		UserContacts uContacts = userContactsService.getUserContacts(id);
+		return Msg.success().add("userContacts", uContacts);
+	}
+	@ResponseBody
+	@RequestMapping(value = "usercontacts/{id}",method=RequestMethod.PUT)
+	public Msg updateUser(UserContacts uContacts) {
+		userContactsService.updateUserContacts(uContacts);
 		return Msg.success();
 	}
 }

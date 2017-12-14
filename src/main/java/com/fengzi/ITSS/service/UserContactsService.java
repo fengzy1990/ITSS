@@ -45,6 +45,20 @@ public class UserContactsService {
 		// TODO Auto-generated method stub
 		userContactsMapper.deleteByPrimaryKey(id);
 	}
+	/**
+	 * 根据id查找该用户所有信息
+	 * @param id
+	 * @return
+	 */
+	public UserContacts getUserContacts(Integer id) {
+		// TODO Auto-generated method stub
+		UserContacts uContacts = userContactsMapper.selectByPrimaryKey(id);
+		return uContacts;
+	}
+	public void updateUserContacts(UserContacts uContacts) {
+		// TODO Auto-generated method stub
+		userContactsMapper.updateByPrimaryKeySelective(uContacts);
+	}
 	
 
 }

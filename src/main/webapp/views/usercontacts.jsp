@@ -37,7 +37,8 @@
 			<div class="col-md-4 col-md-offset-8">
 				<button type="button" class="btn btn-primary"
 					id="user_add_modal_btn">新增</button>
-				<button type="button" class="btn btn-danger" id="user_delete_all_btn">删除</button>
+				<button type="button" class="btn btn-danger"
+					id="user_delete_all_btn">删除</button>
 			</div>
 		</div>
 		<!-- 表格数据 -->
@@ -119,6 +120,7 @@
 										item.usersystem);
 								var userRemarkTd = $("<td></td>").append(
 										item.userremark);
+								//编辑按钮的update_btn用来定义编辑弹出模态框事件
 								var editBtn = $("<button></button>")
 										.addClass(
 												"btn btn-info btn-sm update_btn")
@@ -215,7 +217,7 @@
 			var navEle = $("<nav></nav>").append(ul);
 			navEle.appendTo("#page_nav_area");
 		}
-		//ajax请求，绑定点击事件
+		//ajax请求，绑定点击事件，绑定的是模态框中的按钮
 		$("#user_add_modal_btn").click(
 				function() {
 					//每次弹出模态框，清楚弹出模态框中的数据
@@ -260,7 +262,8 @@
 				show_validate_msg("#userEmail_add_input", "error", "邮箱格式不符合规则！");
 				return false;
 			} else {
-				show_validate_msg("#userEmail_add_input", "success", "邮箱格式符合规则！");
+				show_validate_msg("#userEmail_add_input", "success",
+						"邮箱格式符合规则！");
 			}
 			return true;
 		}
@@ -283,28 +286,24 @@
 					function() {
 						//发送ajax请求，校验用户名是否可用
 						var empName = this.value;
-						$
-								.ajax({
-									url : "${APP_PATH}/checkuser",
-									data : "empName=" + empName,
-									type : "post",
-									success : function(result) {
-										if (result.code == 100) {
-											show_validate_msg(
-													"#empName_add_input",
-													"success", "用户名可用!");
-											$("#usercontact_save_btn").attr("ajax-va",
-													"success");
-										} else {
-											show_validate_msg(
-													"#empName_add_input",
-													"error",
-													result.extend.val_msg);
-											$("#usercontact_save_btn").attr("ajax-va",
-													"error");
-										}
-									}
-								});
+						$.ajax({
+							url : "${APP_PATH}/checkuser",
+							data : "empName=" + empName,
+							type : "post",
+							success : function(result) {
+								if (result.code == 100) {
+									show_validate_msg("#empName_add_input",
+											"success", "用户名可用!");
+									$("#usercontact_save_btn").attr("ajax-va",
+											"success");
+								} else {
+									show_validate_msg("#empName_add_input",
+											"error", result.extend.val_msg);
+									$("#usercontact_save_btn").attr("ajax-va",
+											"error");
+								}
+							}
+						});
 					});
 		});
 		//为保存按钮添加事件
@@ -394,20 +393,28 @@
 		});
 		//为编辑按钮绑定事件，但是页面首先加载完成后，发送ajax请求得到数据后才显示出编辑删除按钮，所以直接.click（）方法绑定不上。
 		//JQuery有live方法，新的版本没有live方法，用on方法代替。
-		$(document).on("click", ".update_btn", function() {
-			//alert("edit");
-			//首先查出员工信息，然后查出部门信息，以下两种方式都可以
-			getDepts("#userUpdateModal select");
-			//getDepts("#dept_update_select");
-			getEmp($(this).attr("update-id"));
+		$(document).on(
+				"click",
+				".update_btn",
+				function() {
+					//alert("edit");
+					//每次弹出更新模态框时，清除之前验证提示和验证结果状态
+					$("#userUpdateModal form").find("*").removeClass(
+							"has-success has-error");
+					$("#userUpdateModal form").find(".help-block").text("");
+					//首先查出员工信息，然后查出部门信息，以下两种方式都可以
+					//getDepts("#userUpdateModal select");
+					//getDepts("#dept_update_select");
+					getUser($(this).attr("update-id"));
 
-			//把员工id即，编辑按钮上的id传递给更新按钮
-			$("#emp_update_btn").attr("update-id", $(this).attr("update-id"));
-			//弹出模态框
-			$("#userUpdateModal").modal({
-				backdrop : "static"
-			});
-		});
+					//把员工id即，编辑按钮上的id传递给更新按钮
+					$("#user_update_btn").attr("update-id",
+							$(this).attr("update-id"));
+					//弹出模态框
+					$("#userUpdateModal").modal({
+						backdrop : "static"
+					});
+				});
 		//删除按钮绑定
 		$(document).on("click", ".delete_btn", function() {
 			//弹出确认删除
@@ -427,61 +434,85 @@
 
 			}
 		});
-		function getEmp(id) {
+		//根据id查找对应的用户信息
+		function getUser(id) {
 			$.ajax({
-				url : "${APP_PATH}/emp/" + id,
+				url : "${APP_PATH}/usercontacts/" + id,
 				type : "GET",
 				success : function(result) {
 					//console.log(result);
-					var empData = result.extend.emp;
-					$("#empName_update_static").text(empData.empName);
-					$("#email_update_input").val(empData.email);
-					$("#userUpdateModal input[name=gender]").val(
-							[ empData.gender ]);
-					$("#userUpdateModal select").val([ empData.dId ]);
+					var userData = result.extend.userContacts;
+					$("#userName_update_input").val(userData.username);
+					$("#userOrigin_update_input").val(userData.userorigin);
+					$("#userPhone_update_input").val(userData.userphone);
+					$("#userEmail_update_input").val(userData.useremail);
+					$("#userQQ_update_input").val(userData.userqq);
+					$("#userWechat_update_input").val(userData.userwechat);
+					$("#userSystem_update_input").val(userData.usersystem);
+					$("#userRemark_update_input").val(userData.userremark);
 				}
 			})
 		}
-		//点击更新，更新员工信息
+		//点击更新，更新员工信息，此处点击事件是绑定更新模态框中更新按钮
 		setTimeout(function() {
-			$("#emp_update_btn")
+			$("#user_update_btn")
 					.click(
 							function() {
+
 								//验证邮箱 
-								var email = $("#email_update_input").val();
+								var userEmail = $("#userEmail_update_input")
+										.val();
 								var regEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-								if (!regEmail.test(email)) {
+								if (!regEmail.test(userEmail)) {
 									//alert("邮箱格式不符合规则！");
-									show_validate_msg("#email_update_input",
-											"error", "邮箱格式不符合规则！");
+									show_validate_msg(
+											"#userEmail_update_input", "error",
+											"邮箱格式不符合规则！");
 									return false;
 								} else {
-									show_validate_msg("#email_update_input",
+									show_validate_msg(
+											"#userEmail_update_input",
 											"success", "邮箱格式符合规则！");
 								}
+								//验证手机号是否正常
+								var userPhone = $("#userPhone_update_input")
+										.val();
+								var regPhone = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+								if (!regPhone.test(userPhone)) {
+									show_validate_msg(
+											"#userPhone_update_input", "error",
+											"手机号不符合规则！");
+									return false;
+								} else {
+									show_validate_msg(
+											"#userPhone_update_input",
+											"success", "手机号符合规则！");
+								}
 								//发送ajax请求，保存更新的信息
-								$.ajax({
-									url : "${APP_PATH}/emp/"
-											+ $(this).attr("update-id"),
-									type : "PUT",
-									data : $("#userUpdateModal form")
-											.serialize(),
-									success : function(result) {
-										//alert(result.msg);
-										if (result.code == 100) {
-											$("#userUpdateModal").modal("hide");
-											to_page(currentNumPage);
-										} else {
-											alert("更新失败！");
-										}
-									}
+								$
+										.ajax({
+											url : "${APP_PATH}/usercontacts/"
+													+ $(this).attr("update-id"),
+											type : "PUT",
+											data : $("#userUpdateModal form")
+													.serialize(),
+											success : function(result) {
+												//alert(result.msg);
+												if (result.code == 100) {
+													$("#userUpdateModal")
+															.modal("hide");
+													to_page(currentNumPage);
+												} else {
+													alert("更新失败！");
+												}
+											}
 
-								});
+										});
 							});
 		});
 		//点击更新员工信息，更新中的模态框按钮的更新事件
 		setTimeout(function() {
-			$("#emp_update_btn").click(function() {
+			$("#user_update_btn").click(function() {
 
 				//发送ajax请求，保存更新的信息
 				$.ajax({
@@ -519,34 +550,38 @@
 							$("#check_all").prop("checked", flag);
 						});
 		//批量删除
-		$("#user_delete_all_btn").click(
-				function() {
-					var userNames = "";//用于显示
-					var userDelIds = "";//用于标记删除
-					//遍历状态为checked的check_item
-					$.each($(".check_item:checked"), function() {
-						//找到check_item的父元素tr，然后找到第三个td
-						userNames += $(this).parents("tr").find("td:eq(2)")
-								.text()
-								+ "，";
-						userDelIds += $(this).parents("tr").find("td:eq(1)")
-								.text()
-								+ "_"
-					});
-					//去除字符串最后一位逗号。
-					userNames = userNames.substring(0, userNames.length - 1);
-					userDelIds = userDelIds.substring(0, userDelIds.length - 1);
-					if (confirm("确认这些【" + userNames + "】都删除吗？")) {
-						$.ajax({
-							url : "${APP_PATH}/usercontacts/" + userDelIds,
-							type : "DELETE",
-							success : function(result) {
-								alert(result.msg);
-								to_page(currentNumPage);
+		$("#user_delete_all_btn")
+				.click(
+						function() {
+							var userNames = "";//用于显示
+							var userDelIds = "";//用于标记删除
+							//遍历状态为checked的check_item
+							$.each($(".check_item:checked"), function() {
+								//找到check_item的父元素tr，然后找到第三个td
+								userNames += $(this).parents("tr").find(
+										"td:eq(2)").text()
+										+ "，";
+								userDelIds += $(this).parents("tr").find(
+										"td:eq(1)").text()
+										+ "_"
+							});
+							//去除字符串最后一位逗号。
+							userNames = userNames.substring(0,
+									userNames.length - 1);
+							userDelIds = userDelIds.substring(0,
+									userDelIds.length - 1);
+							if (confirm("确认这些【" + userNames + "】都删除吗？")) {
+								$.ajax({
+									url : "${APP_PATH}/usercontacts/"
+											+ userDelIds,
+									type : "DELETE",
+									success : function(result) {
+										alert(result.msg);
+										to_page(currentNumPage);
+									}
+								});
 							}
-						});
-					}
-				})
+						})
 	</script>
 </body>
 <!-- 员工新增模态窗 -->
@@ -615,16 +650,16 @@
 						<label for="userSystem_add_input" class="col-sm-2 control-label">管辖系统</label>
 						<div class="col-sm-10">
 							<textarea type="text" name="usersystem" class="form-control"
-								id="userSystem_add_input" placeholder="userWechat"></textarea> <span
-								class="help-block"></span>
+								id="userSystem_add_input" placeholder="userWechat"></textarea>
+							<span class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userRemark_add_input" class="col-sm-2 control-label">备注</label>
 						<div class="col-sm-10">
-							<textarea  type="text" name="userremark" class="form-control"
-								id="userRemark_add_input" placeholder="userWechat"></textarea> <span
-								class="help-block"></span>
+							<textarea type="text" name="userremark" class="form-control"
+								id="userRemark_add_input" placeholder="userWechat"></textarea>
+							<span class="help-block"></span>
 						</div>
 					</div>
 				</form>
@@ -632,7 +667,8 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal"
 					id="usercontact_close.btn">关闭</button>
-				<button type="button" class="btn btn-primary" id="usercontact_save_btn">保存</button>
+				<button type="button" class="btn btn-primary"
+					id="usercontact_save_btn">保存</button>
 			</div>
 		</div>
 	</div>
@@ -648,49 +684,86 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title">员工修改</h4>
+				<h4 class="modal-title">联系人修改</h4>
 			</div>
 			<div class="modal-body">
 				<form class="form-horizontal">
+
 					<div class="form-group">
-						<label for="empName_update_input" class="col-sm-2 control-label">empName</label>
+						<label for="userName_update_input" class="col-sm-2 control-label">姓名</label>
 						<div class="col-sm-10">
-								 <p name="empName" class="form-control-static" id="empName_update_static"></p>
-								 <span class="help-block"></span>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="email_update_input" class="col-sm-2 control-label">email</label>
-						<div class="col-sm-10">
-							<input type="text" name="email" class="form-control"
-								id="email_update_input" placeholder="email@fengzi.com"> <span
+							<input type="text" name="username" class="form-control"
+								id="userName_update_input" placeholder="姓名"> <span
 								class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="gender_update_input" class="col-sm-2 control-label">gender</label>
+						<label for="userOrigin_update_input"
+							class="col-sm-2 control-label">所属机构</label>
 						<div class="col-sm-10">
-							<label class="radio-inline"> <input type="radio"
-								name="gender" id="gender1_update_input" checked="checked" value="M">男
-							</label> <label class="radio-inline"> <input type="radio"
-								name="gender" id="gender2_update_input" value="F">女
-							</label>
+							<input type="text" name="userorigin" class="form-control"
+								id="userOrigin_update_input" placeholder="华为"> <span
+								class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="deptName_update_input" class="col-sm-2 control-label">deptName</label>
-						<div class="col-sm-4">
-							<select class="form-control" name="dId" id="dept_update_select">
-
-							</select>
+						<label for="userPhone_update_input" class="col-sm-2 control-label">手机号</label>
+						<div class="col-sm-10">
+							<input type="text" name="userphone" class="form-control"
+								id="userPhone_update_input" placeholder="166666666"> <span
+								class="help-block"></span>
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="userEmail_update_input" class="col-sm-2 control-label">email</label>
+						<div class="col-sm-10">
+							<input type="text" name="useremail" class="form-control"
+								id="userEmail_update_input" placeholder="email@fengzi.com">
+							<span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="userQQ_update_input" class="col-sm-2 control-label">QQ</label>
+						<div class="col-sm-10">
+							<input type="text" name="userqq" class="form-control"
+								id="userQQ_update_input" placeholder="QQ"> <span
+								class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="userWechat_update_input"
+							class="col-sm-2 control-label">微信</label>
+						<div class="col-sm-10">
+							<input type="text" name="userwechat" class="form-control"
+								id="userWechat_update_input" placeholder="userWechat"> <span
+								class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="userSystem_update_input"
+							class="col-sm-2 control-label">管辖系统</label>
+						<div class="col-sm-10">
+							<textarea type="text" name="usersystem" class="form-control"
+								id="userSystem_update_input" placeholder="userWechat"></textarea>
+							<span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="userRemark_update_input"
+							class="col-sm-2 control-label">备注</label>
+						<div class="col-sm-10">
+							<textarea type="text" name="userremark" class="form-control"
+								id="userRemark_update_input" placeholder="userWechat"></textarea>
+							<span class="help-block"></span>
+						</div>
+					</div>
+
 				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal"
 					id="emp_close.btn">关闭</button>
-				<button type="button" class="btn btn-primary" id="emp_update_btn">更新</button>
+				<button type="button" class="btn btn-primary" id="user_update_btn">更新</button>
 			</div>
 		</div>
 	</div>
