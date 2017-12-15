@@ -254,6 +254,17 @@
 		//校验函数
 		function validate_add_form() {
 			//首先要拿到数据，使用正则表达式
+			//验证手机号是否正常
+			var userPhone = $("#userPhone_add_input").val();
+			var regPhone = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+			if (!regPhone.test(userPhone)) {
+				show_validate_msg("#userPhone_add_input", "error",
+						"手机号不符合规则！");
+				return false;
+			} else {
+				show_validate_msg("#userPhone_add_input", "success",
+						"手机号符合规则！");
+			}
 			var email = $("#userEmail_add_input").val();
 			var regEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 			if (!regEmail.test(email)) {
@@ -458,7 +469,20 @@
 			$("#user_update_btn")
 					.click(
 							function() {
-
+								//验证手机号是否正常
+								var userPhone = $("#userPhone_update_input")
+										.val();
+								var regPhone = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+								if (!regPhone.test(userPhone)) {
+									show_validate_msg(
+											"#userPhone_update_input", "error",
+											"手机号不符合规则！");
+									return false;
+								} else {
+									show_validate_msg(
+											"#userPhone_update_input",
+											"success", "手机号符合规则！");
+								}
 								//验证邮箱 
 								var userEmail = $("#userEmail_update_input")
 										.val();
@@ -473,20 +497,6 @@
 									show_validate_msg(
 											"#userEmail_update_input",
 											"success", "邮箱格式符合规则！");
-								}
-								//验证手机号是否正常
-								var userPhone = $("#userPhone_update_input")
-										.val();
-								var regPhone = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
-								if (!regPhone.test(userPhone)) {
-									show_validate_msg(
-											"#userPhone_update_input", "error",
-											"手机号不符合规则！");
-									return false;
-								} else {
-									show_validate_msg(
-											"#userPhone_update_input",
-											"success", "手机号符合规则！");
 								}
 								//发送ajax请求，保存更新的信息
 								$
