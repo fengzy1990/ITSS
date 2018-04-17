@@ -676,7 +676,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal"
-					id="usercontact_close.btn">关闭</button>
+					id="usercontact_close_btn">关闭</button>
 				<button type="button" class="btn btn-primary"
 					id="usercontact_save_btn">保存</button>
 			</div>
