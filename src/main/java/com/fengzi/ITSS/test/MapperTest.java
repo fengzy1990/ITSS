@@ -3,15 +3,10 @@ package com.fengzi.ITSS.test;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import com.fengzi.ITSS.dao.userLoginMapper;
-import com.fengzi.curd.bean.userLogin;
-import com.fengzi.curd.bean.userLoginExample;
-import com.fengzi.curd.bean.userLoginExample.Criteria;
 
 /**
  * 
