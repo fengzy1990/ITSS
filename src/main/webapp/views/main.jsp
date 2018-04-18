@@ -15,7 +15,7 @@
  -->
 <!-- 引入jQuery样式 -->
 <script type="text/javascript"
-	src="${APP_PATH}/static/js/jquery-1.12.4.min.js"></script>
+	src="${APP_PATH}/static/js/jquery-2.2.4.min.js"></script>
 <!-- 引入样式 -->
 <link
 	href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"
@@ -24,33 +24,35 @@
 	src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<table width="100%" height="100">
-		<tr>
-			<td><%@ include file="inc/top.jsp"%></td>
-		</tr>
-		<tr>
-			<td align="center">
-				<table>
-					<tr>
-						<td><h1>请选择要进入的模块</h1></td>
-					</tr>
-					<tr>
-						<td align="center">&nbsp;</td>
-					</tr>
-					<tr>
-						<td><ul>
-								<li><a href="views/usercontacts.jsp">维护厂家联系人</a></li>
-							</ul></td>
-						<td><ul>
-								<li><a href="#">机房设备维护</a></li>
-							</ul></td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td align="center"><%@ include file="inc/foot.jsp"%></td>
-		</tr>
-	</table>
+	<div class="container-fluid">
+		<div class="row" style="background-color: black;">
+			<%@ include file="inc/top.jsp"%>
+		</div>
+		<div class="row">
+			<div class="container">
+				<div class="row">
+					<h2>请选择要进入的系统模块</h2>
+				</div>
+				<div class="row">
+					<table class="table table-hover">
+						<tr>
+							<td><ul>
+									<li><a href="views/usercontacts.jsp">维护厂家联系人</a></li>
+								</ul></td>
+							<td><ul>
+									<li><a href="#">机房设备维护</a></li>
+								</ul></td>
+							<td><ul>
+									<li><a href="views/equip_index.jsp">系统维护操作</a></li>
+								</ul></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<%@ include file="inc/foot.jsp"%>
+		</div>
+	</div>
 </body>
 </html>

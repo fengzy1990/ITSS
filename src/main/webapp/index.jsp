@@ -15,13 +15,13 @@
  -->
 <!-- 引入jQuery样式 -->
 <script type="text/javascript"
-	src="${APP_PATH}/static/js/jquery-1.12.4.min.js"></script>
+	src="${APP_PATH}/static/js/jquery-2.2.4.min.js"></script>
 <!-- 引入样式 -->
 <link
-	href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"
+	href="${APP_PATH}/static/css/bootstrap-3.3.7-dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <script
-	src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	src="${APP_PATH}/static/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 
 </head>
 <body>
@@ -29,7 +29,7 @@
 		<tr>
 			<td align="center">
 				<table width="800" height="662"
-					background="static/img/login/imac1.png" style="margin-top: 40px">
+					background="static/img/imac1.png" style="margin-top: 40px">
 					<!-- 搭建显示页面 -->
 					<tr>
 						<td align="center" style="margin-top: 0px"><h2>欢迎登录IT系统支撑</h2></td>

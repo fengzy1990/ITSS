@@ -1,0 +1,17 @@
+body {
+    background-image: url("../img/loginBac.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}  
+h1 {
+	text-align:center;
+	color:yellow ;
+}
+menu{
+	border:em;
+	color: red;
+}
+a{
+	border:em;
+	color:red;
+}
