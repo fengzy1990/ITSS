@@ -1,0 +1,69 @@
+body {
+  font-family: "Georgia", serif;
+  font-size: 13px;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  text-rendering: geometricPrecision;
+  font-smooth: always;
+  font-smooth: never;
+  font-smoothing: antialiased;
+  -moz-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  color: #333333;
+}
+
+.intro-text {
+  font-size: 28px;
+  font-style: italic;
+  line-height: 14px;
+}
+
+.intro-text span {
+  font-size: 10px;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+ul {
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  text-align: justify;
+}
+ul::after {
+   width: 100%;
+  display: inline-block;
+  content: ".";
+  visibility: hidden;
+}
+
+li {
+   text-align: left;
+   width: 220px;
+   display: inline-block;
+   margin-right: 0;
+   padding-bottom: 30px;
+}
+
+li .image {
+  display: table;
+  vertical-align: bottom;
+  width: 100%;
+  min-height: 108px;
+  max-height: 108px;
+  height: 108px;
+  margin-bottom: 25px;
+}
+li .image .row {
+  display: table-cell;
+  vertical-align: bottom;
+  width: 100%;
+}
+svg {
+  vertical-align: bottom;
+  width: auto !important;
+}

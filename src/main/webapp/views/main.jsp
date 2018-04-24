@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,24 +28,9 @@
 			<%@ include file="inc/top.jsp"%>
 		</div>
 		<div class="row">
-			<div class="container">
+			<div class="container-fluid">
 				<div class="row">
-					<h2>请选择要进入的系统模块</h2>
-				</div>
-				<div class="row">
-					<table class="table table-hover">
-						<tr>
-							<td><ul>
-									<li><a href="views/usercontacts.jsp">维护厂家联系人</a></li>
-								</ul></td>
-							<td><ul>
-									<li><a href="#">机房设备维护</a></li>
-								</ul></td>
-							<td><ul>
-									<li><a href="views/equip_index.jsp">系统维护操作</a></li>
-								</ul></td>
-						</tr>
-					</table>
+					<h2><%@ include file="icon_main.jsp"%></h2>
 				</div>
 			</div>
 		</div>
