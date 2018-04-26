@@ -1,7 +1,8 @@
 package com.fengzi.ITSS.dao;
 
-import com.fengzi.curd.bean.userLogin;
-import com.fengzi.curd.bean.userLoginExample;
+import com.fengzi.ITSS.bean.userLogin;
+import com.fengzi.ITSS.bean.userLoginExample;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -17,15 +17,16 @@ public class UserLoginController {
 	@Autowired
 	userLoginService uLoginService;
 
+	// 用户登录校验
 	@RequestMapping(value = "/checkuser", method = RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView checkUser(String inputName, String inputPassword,HttpSession session, Model model) {
+	public ModelAndView checkUser(String inputName, String inputPassword, HttpSession session, Model model) {
 		ModelAndView mView = new ModelAndView();
 		// 进行校验
-		System.out.println("checkuser" + inputName + inputPassword);
+		System.out.println("checkuser====" + inputName + inputPassword);
 		if (uLoginService.login(inputName, inputPassword)) {
 			mView.addObject("msg", "success");
-			session.setAttribute("SESSION_USER",inputName);
+			session.setAttribute("SESSION_USER", inputName);
 			mView.setViewName("views/main");
 
 		} else {
@@ -35,5 +36,15 @@ public class UserLoginController {
 		// System.out.println(mView);
 		return mView;
 
+	}
+
+	// 注销登录用户
+	@RequestMapping(value = "userLogout")
+	public ModelAndView UserLogout(HttpSession session, Model model) {
+		ModelAndView mView = new ModelAndView();
+		session.removeAttribute("SESSION_USER");
+		mView.setViewName("index");
+		System.out.println(session.getAttribute("SESSION_USER"));
+		return mView;
 	}
 }

@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fengzi.ITSS.bean.UserContacts;
+import com.fengzi.ITSS.bean.UserContactsExample;
+import com.fengzi.ITSS.bean.UserContactsExample.Criteria;
 import com.fengzi.ITSS.dao.UserContactsMapper;
-import com.fengzi.curd.bean.UserContacts;
-import com.fengzi.curd.bean.UserContactsExample;
-import com.fengzi.curd.bean.UserContactsExample.Criteria;
 
 @Service
 public class UserContactsService {

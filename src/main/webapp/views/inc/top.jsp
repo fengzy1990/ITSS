@@ -9,7 +9,7 @@
 %>
 <title>IT System Support</title>
 <style>
-tr, td {
+.trtd {
 	font-size: 25px;
 	color: #ffffff;
 	letter-spacing: 15px;
@@ -21,8 +21,11 @@ tr, td {
 		cellpadding="0">
 		<tr>
 			<td align="left"><img src="${APP_PATH}/static/img/fly.png"
-				height="60" /></td>
-			<td align="center">自主创新平台</td>
+				height="60" align="middle" /></td>
+			<td align="center" class="trtd">自主创新平台</td>
+			<td align="center" style="color: #ffffff;">当前用户：<%=session.getAttribute("SESSION_USER")%>
+				|<a href="userLogout">注销</a>
+			</td>
 		</tr>
 	</table>
 </body>

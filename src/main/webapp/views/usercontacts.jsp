@@ -34,11 +34,21 @@
 		</div>
 		<!-- 按钮 -->
 		<div class="row">
-			<div class="col-md-4 col-md-offset-8">
-				<button type="button" class="btn btn-primary"
-					id="user_add_modal_btn">新增</button>
-				<button type="button" class="btn btn-danger"
-					id="user_delete_all_btn">删除</button>
+			<div class="col-md-6 col-md-offset-5">
+				<!--页面的搜索框-->
+				<div class="navbar-form navbar-left visible-lg-block">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="输入关键字">
+						<span class="input-group-btn">
+							<button class="btn btn-success">搜索</button>
+							<button type="button" class="btn btn-primary"
+								id="user_add_modal_btn">新增</button>
+							<button type="button" class="btn btn-danger"
+								id="user_delete_all_btn">删除</button>
+						</span>
+					</div>
+				</div>
+
 			</div>
 		</div>
 		<!-- 表格数据 -->
@@ -258,12 +268,10 @@
 			var userPhone = $("#userPhone_add_input").val();
 			var regPhone = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
 			if (!regPhone.test(userPhone)) {
-				show_validate_msg("#userPhone_add_input", "error",
-						"手机号不符合规则！");
+				show_validate_msg("#userPhone_add_input", "error", "手机号不符合规则！");
 				return false;
 			} else {
-				show_validate_msg("#userPhone_add_input", "success",
-						"手机号符合规则！");
+				show_validate_msg("#userPhone_add_input", "success", "手机号符合规则！");
 			}
 			var email = $("#userEmail_add_input").val();
 			var regEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;

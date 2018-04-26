@@ -72,7 +72,7 @@
 					</div>
 				</div>
 
-				<p><a href="${APP_PATH}/views/equip_index.jsp">系统维护操作</a></p>
+				<p><a href="${APP_PATH}/views/equip_index.jsp" target="_blank">系统维护操作</a></p>
 			</li>
 
 			<li>
@@ -142,7 +142,7 @@
 					</div>
 				</div>
 
-				<p>UX/UI</p>
+				<p><a href="#" target="_blank">UX/UI</a></p>
 			</li>
 
 			<li>
@@ -187,7 +187,7 @@
 				</div>
 
 				<p>
-					<a href="${APP_PATH}/views/usercontacts.jsp">厂家联系人维护</a>
+					<a href="${APP_PATH}/views/usercontacts.jsp" target="_blank">厂家联系人维护</a>
 				</p>
 
 			</li>
@@ -222,7 +222,7 @@
 					</div>
 				</div>
 
-				<p><a href="#">机房设备维护</a></p>
+				<p><a href="#" target="_blank">机房设备维护</a></p>
 
 			</li>
 
@@ -277,7 +277,7 @@
 					</div>
 				</div>
 
-				<p><a href="ftp://112.132.231.16:6689" target="_blank">软件下载</a></p>
+				<p><a href="ftp://112.132.231.16:6689" target="_blank">FTP软件下载</a></p>
 			</li>
 
 			<li>
@@ -319,7 +319,7 @@
 					</div>
 				</div>
 
-				<p>Events</p>
+				<p><a href="#" target="_blank">考核及通报</a></p>
 			</li>
 		</ul>
 	</div>

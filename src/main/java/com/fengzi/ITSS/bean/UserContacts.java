@@ -1,4 +1,4 @@
-package com.fengzi.curd.bean;
+package com.fengzi.ITSS.bean;
 
 import javax.validation.constraints.Pattern;
 

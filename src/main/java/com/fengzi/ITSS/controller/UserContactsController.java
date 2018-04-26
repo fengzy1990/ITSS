@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fengzi.ITSS.bean.Msg;
+import com.fengzi.ITSS.bean.UserContacts;
 import com.fengzi.ITSS.service.UserContactsService;
-import com.fengzi.curd.bean.UserContacts;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 

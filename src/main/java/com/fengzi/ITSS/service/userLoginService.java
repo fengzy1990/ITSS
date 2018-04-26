@@ -3,9 +3,9 @@ package com.fengzi.ITSS.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fengzi.ITSS.bean.userLoginExample;
+import com.fengzi.ITSS.bean.userLoginExample.Criteria;
 import com.fengzi.ITSS.dao.userLoginMapper;
-import com.fengzi.curd.bean.userLoginExample;
-import com.fengzi.curd.bean.userLoginExample.Criteria;
 
 @Service
 public class userLoginService {

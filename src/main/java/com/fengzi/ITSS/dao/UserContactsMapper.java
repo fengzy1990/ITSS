@@ -1,7 +1,8 @@
 package com.fengzi.ITSS.dao;
 
-import com.fengzi.curd.bean.UserContacts;
-import com.fengzi.curd.bean.UserContactsExample;
+import com.fengzi.ITSS.bean.UserContacts;
+import com.fengzi.ITSS.bean.UserContactsExample;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

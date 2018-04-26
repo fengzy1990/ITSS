@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fengzi.ITSS.dao.userLoginMapper">
-	<resultMap id="BaseResultMap" type="com.fengzi.curd.bean.userLogin">
+	<resultMap id="BaseResultMap" type="com.fengzi.ITSS.bean.userLogin">
 		<id column="id" jdbcType="INTEGER" property="id" />
 		<result column="userId" jdbcType="VARCHAR" property="userid" />
 		<result column="userPassword" jdbcType="VARCHAR" property="userpassword" />
@@ -81,7 +81,7 @@
 		userEmail,
 		userPermission
 	</sql>
-	<select id="selectByExample" parameterType="com.fengzi.curd.bean.userLoginExample"
+	<select id="selectByExample" parameterType="com.fengzi.ITSS.bean.userLoginExample"
 		resultMap="BaseResultMap">
 		select
 		<if test="distinct">
@@ -103,7 +103,7 @@
 		from userlogin
 		where id = #{id,jdbcType=INTEGER}
 	</select>
-	<select id="countByExample" parameterType="com.fengzi.curd.bean.userLoginExample"
+	<select id="countByExample" parameterType="com.fengzi.ITSS.bean.userLoginExample"
 		resultType="java.lang.Long">
 		select count(*) from userlogin
 		<if test="_parameter != null">
@@ -122,13 +122,13 @@
 		userlogin
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
-	<delete id="deleteByExample" parameterType="com.fengzi.curd.bean.userLoginExample">
+	<delete id="deleteByExample" parameterType="com.fengzi.ITSS.bean.userLoginExample">
 		delete from userlogin
 		<if test="_parameter != null">
 			<include refid="Example_Where_Clause" />
 		</if>
 	</delete>
-	<insert id="insert" parameterType="com.fengzi.curd.bean.userLogin">
+	<insert id="insert" parameterType="com.fengzi.ITSS.bean.userLogin">
 		insert into userlogin (id,
 		userId, userPassword,
 		userName, userOrigin, userPhone,
@@ -142,7 +142,7 @@
 		#{useremail,jdbcType=VARCHAR},
 		#{userpermission,jdbcType=VARCHAR})
 	</insert>
-	<insert id="insertSelective" parameterType="com.fengzi.curd.bean.userLogin">
+	<insert id="insertSelective" parameterType="com.fengzi.ITSS.bean.userLogin">
 		insert into userlogin
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -251,7 +251,7 @@
 			<include refid="Update_By_Example_Where_Clause" />
 		</if>
 	</update>
-	<update id="updateByPrimaryKeySelective" parameterType="com.fengzi.curd.bean.userLogin">
+	<update id="updateByPrimaryKeySelective" parameterType="com.fengzi.ITSS.bean.userLogin">
 		update userlogin
 		<set>
 			<if test="userid != null">
@@ -278,7 +278,7 @@
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
-	<update id="updateByPrimaryKey" parameterType="com.fengzi.curd.bean.userLogin">
+	<update id="updateByPrimaryKey" parameterType="com.fengzi.ITSS.bean.userLogin">
 		update userlogin
 		set userId = #{userid,jdbcType=VARCHAR},
 		userPassword =
