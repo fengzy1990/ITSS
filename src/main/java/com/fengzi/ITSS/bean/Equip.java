@@ -15,7 +15,25 @@ public class Equip {
 
     private String eqLoginmod;
 
-    public Integer getEqId() {
+    
+    public Equip(Integer eqId, String eqName, String eqAddress, String eqPort, String eqLoginname,
+			String eqLoginpassword, String eqLoginmod) {
+		super();
+		this.eqId = eqId;
+		this.eqName = eqName;
+		this.eqAddress = eqAddress;
+		this.eqPort = eqPort;
+		this.eqLoginname = eqLoginname;
+		this.eqLoginpassword = eqLoginpassword;
+		this.eqLoginmod = eqLoginmod;
+	}
+
+	public Equip() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Integer getEqId() {
         return eqId;
     }
 

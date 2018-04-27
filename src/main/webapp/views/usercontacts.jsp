@@ -1,18 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>联系人列表</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
-<!-- web路径问题
-	不易/开始的相对路径，找资源，是以当前资源的路径为基准，经常出现问题。
-	以/开始的相对路径，找资源，是以服务器的路径为标准（http://xxx:9909）
- -->
 <!-- 引入jQuery样式 -->
 <script type="text/javascript"
 	src="${APP_PATH}/static/js/jquery-2.2.4.min.js"></script>
@@ -24,62 +18,70 @@
 	src="${APP_PATH}/static/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<!-- 搭建显示页面 -->
-	<div class="container">
-		<!-- 标题 -->
+	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-12">
-				<h1>厂商-联系人</h1>
-			</div>
+			<%@ include file="inc/equip_menu.jsp"%>
 		</div>
-		<!-- 按钮 -->
 		<div class="row">
-			<div class="col-md-6 col-md-offset-5">
-				<!--页面的搜索框-->
-				<div class="navbar-form navbar-left visible-lg-block">
-					<div class="input-group">
-						<input type="text" class="form-control" placeholder="输入关键字">
-						<span class="input-group-btn">
-							<button class="btn btn-success">搜索</button>
-							<button type="button" class="btn btn-primary"
-								id="user_add_modal_btn">新增</button>
-							<button type="button" class="btn btn-danger"
-								id="user_delete_all_btn">删除</button>
-						</span>
+			<!-- 搭建显示页面 -->
+			<div class="container">
+				<!-- 标题 -->
+				<div class="row">
+					<div class="col-md-12">
+						<h1>厂商-联系人</h1>
+						<hr>
 					</div>
 				</div>
+				<!-- 按钮 -->
+				<div class="row">
+					<div class="col-md-6 col-md-offset-5">
+						<!--页面的搜索框-->
+						<div class="navbar-form navbar-left visible-lg-block">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="输入关键字">
+								<span class="input-group-btn">
+									<button class="btn btn-success">搜索</button>
+									<button type="button" class="btn btn-primary"
+										id="user_add_modal_btn">新增</button>
+									<button type="button" class="btn btn-danger"
+										id="user_delete_all_btn">删除</button>
+								</span>
+							</div>
+						</div>
 
-			</div>
-		</div>
-		<!-- 表格数据 -->
-		<div class="row">
-			<div class="col-md-12">
-				<table class="table table-hover" id="users_table">
-					<thead>
-						<tr>
-							<th><input type="checkbox" id="check_all" /></th>
-							<th>#</th>
-							<th>姓名</th>
-							<th>所属机构</th>
-							<th>手机号</th>
-							<th>邮箱</th>
-							<th>QQ</th>
-							<th>微信</th>
-							<th>所辖系统</th>
-							<th>备注</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
+					</div>
+				</div>
+				<!-- 表格数据 -->
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-hover" id="users_table">
+							<thead>
+								<tr>
+									<th><input type="checkbox" id="check_all" /></th>
+									<th>#</th>
+									<th>姓名</th>
+									<th>所属机构</th>
+									<th>手机号</th>
+									<th>邮箱</th>
+									<th>QQ</th>
+									<th>微信</th>
+									<th>所辖系统</th>
+									<th>备注</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
 
-					</tbody>
-				</table>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- 分页信息 -->
+				<div class="row">
+					<div class="col-md-6" id="page_info_area"></div>
+					<div class="clo-md-6" id="page_nav_area"></div>
+				</div>
 			</div>
-		</div>
-		<!-- 分页信息 -->
-		<div class="row">
-			<div class="col-md-6" id="page_info_area"></div>
-			<div class="clo-md-6" id="page_nav_area"></div>
 		</div>
 	</div>
 	<script type="text/javascript">

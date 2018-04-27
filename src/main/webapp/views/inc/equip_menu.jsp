@@ -31,16 +31,8 @@
 			<ul class="nav  navbar-nav">
 				<li><a href="equip_main.jsp">首页</a></li>
 				<li><a href="equip_login.jsp" target="_blank">设备登录</a></li>
-				<li><a href="http://www.baidu.com" target="_blank">厂家记录</a></li>
 				<li><a href="equip_maintance.jsp" target="_blank">设备维护</a></li>
-				<li><a class="dropdown-toggle" id="dropdownMenu"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="true">全部 <span class="caret"></span></a>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-						<li><a href="http://www.baidu.com" target="_blank">生活</a></li>
-						<li><a href="http://www.baidu.com" target="_blank">教育</a></li>
-						<li><a href="http://www.baidu.com" target="_blank">经济</a></li>
-					</ul></li>
+				<li><a href="#" target="_blank">管理授权</a></li>
 			</ul>
 			<!--这里制作导航页面的搜索框-->
 			<div class="navbar-form navbar-left visible-lg-block">

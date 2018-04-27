@@ -110,6 +110,7 @@ public class UserContactsController {
 		UserContacts uContacts = userContactsService.getUserContacts(id);
 		return Msg.success().add("userContacts", uContacts);
 	}
+	//根据id更新用户信息
 	@ResponseBody
 	@RequestMapping(value = "usercontacts/{id}",method=RequestMethod.PUT)
 	public Msg updateUser(UserContacts uContacts) {

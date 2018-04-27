@@ -72,7 +72,7 @@
 					</div>
 				</div>
 
-				<p><a href="${APP_PATH}/views/equip_index.jsp" target="_blank">系统维护操作</a></p>
+				<p><a href="${APP_PATH}/views/equip_index.jsp" target="_blank">设备统一登录</a></p>
 			</li>
 
 			<li>
