@@ -622,55 +622,49 @@
 						<label for="userName_add_input" class="col-sm-2 control-label">姓名</label>
 						<div class="col-sm-10">
 							<input type="text" name="username" class="form-control"
-								id="userName_add_input" placeholder="姓名"> <span
-								class="help-block"></span>
+								id="userName_add_input"> <span class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userOrigin_add_input" class="col-sm-2 control-label">所属机构</label>
 						<div class="col-sm-10">
 							<input type="text" name="userorigin" class="form-control"
-								id="userOrigin_add_input" placeholder="华为"> <span
-								class="help-block"></span>
+								id="userOrigin_add_input"> <span class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userPhone_add_input" class="col-sm-2 control-label">手机号</label>
 						<div class="col-sm-10">
 							<input type="text" name="userphone" class="form-control"
-								id="userPhone_add_input" placeholder="166666666"> <span
-								class="help-block"></span>
+								id="userPhone_add_input"> <span class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userEmail_add_input" class="col-sm-2 control-label">email</label>
 						<div class="col-sm-10">
 							<input type="text" name="useremail" class="form-control"
-								id="userEmail_add_input" placeholder="email@fengzi.com">
-							<span class="help-block"></span>
+								id="userEmail_add_input"> <span class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userQQ_add_input" class="col-sm-2 control-label">QQ</label>
 						<div class="col-sm-10">
 							<input type="text" name="userqq" class="form-control"
-								id="userQQ_add_input" placeholder="QQ"> <span
-								class="help-block"></span>
+								id="userQQ_add_input"> <span class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userWechat_add_input" class="col-sm-2 control-label">微信</label>
 						<div class="col-sm-10">
 							<input type="text" name="userwechat" class="form-control"
-								id="userWechat_add_input" placeholder="userWechat"> <span
-								class="help-block"></span>
+								id="userWechat_add_input"> <span class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userSystem_add_input" class="col-sm-2 control-label">管辖系统</label>
 						<div class="col-sm-10">
 							<textarea type="text" name="usersystem" class="form-control"
-								id="userSystem_add_input" placeholder="userWechat"></textarea>
+								id="userSystem_add_input"></textarea>
 							<span class="help-block"></span>
 						</div>
 					</div>
@@ -678,7 +672,7 @@
 						<label for="userRemark_add_input" class="col-sm-2 control-label">备注</label>
 						<div class="col-sm-10">
 							<textarea type="text" name="userremark" class="form-control"
-								id="userRemark_add_input" placeholder="userWechat"></textarea>
+								id="userRemark_add_input"></textarea>
 							<span class="help-block"></span>
 						</div>
 					</div>
@@ -713,8 +707,7 @@
 						<label for="userName_update_input" class="col-sm-2 control-label">姓名</label>
 						<div class="col-sm-10">
 							<input type="text" name="username" class="form-control"
-								id="userName_update_input" placeholder="姓名"> <span
-								class="help-block"></span>
+								id="userName_update_input"> <span class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
@@ -722,32 +715,28 @@
 							class="col-sm-2 control-label">所属机构</label>
 						<div class="col-sm-10">
 							<input type="text" name="userorigin" class="form-control"
-								id="userOrigin_update_input" placeholder="华为"> <span
-								class="help-block"></span>
+								id="userOrigin_update_input"> <span class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userPhone_update_input" class="col-sm-2 control-label">手机号</label>
 						<div class="col-sm-10">
 							<input type="text" name="userphone" class="form-control"
-								id="userPhone_update_input" placeholder="166666666"> <span
-								class="help-block"></span>
+								id="userPhone_update_input"> <span class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userEmail_update_input" class="col-sm-2 control-label">email</label>
 						<div class="col-sm-10">
 							<input type="text" name="useremail" class="form-control"
-								id="userEmail_update_input" placeholder="email@fengzi.com">
-							<span class="help-block"></span>
+								id="userEmail_update_input"> <span class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userQQ_update_input" class="col-sm-2 control-label">QQ</label>
 						<div class="col-sm-10">
 							<input type="text" name="userqq" class="form-control"
-								id="userQQ_update_input" placeholder="QQ"> <span
-								class="help-block"></span>
+								id="userQQ_update_input"> <span class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
@@ -755,8 +744,7 @@
 							class="col-sm-2 control-label">微信</label>
 						<div class="col-sm-10">
 							<input type="text" name="userwechat" class="form-control"
-								id="userWechat_update_input" placeholder="userWechat"> <span
-								class="help-block"></span>
+								id="userWechat_update_input"> <span class="help-block"></span>
 						</div>
 					</div>
 					<div class="form-group">
@@ -764,7 +752,7 @@
 							class="col-sm-2 control-label">管辖系统</label>
 						<div class="col-sm-10">
 							<textarea type="text" name="usersystem" class="form-control"
-								id="userSystem_update_input" placeholder="userWechat"></textarea>
+								id="userSystem_update_input"></textarea>
 							<span class="help-block"></span>
 						</div>
 					</div>
@@ -773,7 +761,7 @@
 							class="col-sm-2 control-label">备注</label>
 						<div class="col-sm-10">
 							<textarea type="text" name="userremark" class="form-control"
-								id="userRemark_update_input" placeholder="userWechat"></textarea>
+								id="userRemark_update_input"></textarea>
 							<span class="help-block"></span>
 						</div>
 					</div>

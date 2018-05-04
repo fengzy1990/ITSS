@@ -1,12 +1,16 @@
 package com.fengzi.ITSS.bean;
 
+import javax.validation.constraints.Pattern;
+
 public class Equip {
     private Integer eqId;
 
     private String eqName;
 
+    @Pattern(regexp="^(\\d|[1-9]\\d|1\\d{2}|2[0-5][0-5])\\.(\\d|[1-9]\\d|1\\d{2}|2[0-5][0-5])\\.(\\d|[1-9]\\d|1\\d{2}|2[0-5][0-5])\\.(\\d|[1-9]\\d|1\\d{2}|2[0-5][0-5])$",message="IP地址不符合规则.")
     private String eqAddress;
-
+    
+    @Pattern(regexp="^([0-9]|[1-9]\\d{1,3}|[1-5]\\d{4}|6[0-5]{2}[0-3][0-5])$",message="端口设置错误.")    
     private String eqPort;
 
     private String eqLoginname;

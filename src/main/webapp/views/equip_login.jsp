@@ -90,7 +90,7 @@
 				var loginBtn = $("<button></button>").addClass(
 						"btn btn-info btn-sm login_btn").append(
 						$("<span></span>").addClass(
-								"glyphicon glyphicon-pencil")).append("登录");
+								"glyphicon glyphicon-log-in")).append(" 登录");
 				//为编辑按钮添加自定义属性，可以在更新数据时，知道是哪条数据,不能使用empIdTd，这是一个Object对象
 				loginBtn.attr("login-id", item.id);
 				var btnTd = $("<td></td>").append(loginBtn);
@@ -168,13 +168,13 @@
 		$(document).on("click", ".login_btn", function() {
 			//弹出确认删除
 			//alert($(this).parents("tr").find("td:eq(1)").text());
-			var eqName = $(this).parents("tr").find("td:eq(2)").text();
+			var eqIP = $(this).parents("tr").find("td:eq(2)").text();
 			var eqId = $(this).attr("login-id");
-			if (confirm("确认登录IP为【" + eqName + "】吗？")) {
+			if (confirm("确认登录IP为【" + eqIP + "】吗？")) {
 				//去人删除ajax请求。
 				$.ajax({
 					url : "${APP_PATH}/loginEquip/" + eqId,
-					type : "GET",
+					type : "PUT",
 					success : function(result) {
 						//alert(result.msg);
 						to_page(currentNumPage);

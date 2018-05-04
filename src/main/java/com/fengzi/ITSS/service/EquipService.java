@@ -30,6 +30,11 @@ public class EquipService {
 	public void loginEquip(Integer eqId) {
 		// TODO Auto-generated method stub
 		Equip equip = equipMapper.selectByPrimaryKey(eqId);
+		String ip = equip.getEqAddress();
+		String port = equip.getEqPort();
+		String lname = equip.getEqName();
+		String passwd = equip.getEqLoginpassword();
+
 	}
 
 	// 添加设备
@@ -61,4 +66,18 @@ public class EquipService {
 		criteria.andEqIdIn(deList);
 		equipMapper.deleteByExample(equipExample);
 	}
+
+	/**
+	 * 批量删除
+	 * 
+	 * @param list
+	 */
+	public void delEquipBatch(List<Integer> list) {
+		// TODO Auto-generated method stub
+		EquipExample equipExample = new EquipExample();
+		Criteria criteria = equipExample.createCriteria();
+		criteria.andEqIdIn(list);
+		equipMapper.deleteByExample(equipExample);
+	}
+
 }

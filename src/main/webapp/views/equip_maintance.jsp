@@ -119,7 +119,7 @@
 																"glyphicon glyphicon-pencil"))
 										.append(" 编辑");
 								//为编辑按钮添加自定义属性，可以在更新数据时，知道是哪条数据,不能使用empIdTd，这是一个Object对象
-								editBtn.attr("update-id", item.id);
+								editBtn.attr("update-id", item.eqId);
 								var delBtn = $("<button></button>")
 										.addClass(
 												"btn btn-warning btn-sm delete_btn")
@@ -129,7 +129,7 @@
 																"glyphicon glyphicon-trash"))
 										.append(" 删除");
 								//删除按钮添加自定义属性，可以在删除数据时，知道是哪条数据
-								delBtn.attr("del-id", item.id);
+								delBtn.attr("del-id", item.eqId);
 								var btnTd = $("<td></td>").append(editBtn)
 										.append(delBtn);
 								$("<tr></tr>").append(checkBoxId).append(idTd)
@@ -203,8 +203,33 @@
 			var navEle = $("<nav></nav>").append(ul);
 			navEle.appendTo("#page_nav_area");
 		}
+		//批量删除
+		$("#eq_delete_all_btn").click(function() {
+			var eqNames = "";//用于显示
+			var eqDelIds = "";//用于标记删除
+			//遍历状态为checked的check_item
+			$.each($(".check_item:checked"), function() {
+				//找到check_item的父元素tr，然后找到第三个td
+				eqNames += $(this).parents("tr").find("td:eq(2)").text() + "，";
+				eqDelIds += $(this).parents("tr").find("td:eq(1)").text() + "_"
+			});
+			//去除字符串最后一位逗号。
+			eqNames = eqNames.substring(0, eqNames.length - 1);
+			eqDelIds = eqDelIds.substring(0, eqDelIds.length - 1);
+			//alert(eqDelIds);
+			if (confirm("确认这些【" + eqNames + "】都删除吗？")) {
+				$.ajax({
+					url : "${APP_PATH}/equip/" + eqDelIds,
+					type : "DELETE",
+					success : function(result) {
+						alert(result.msg);
+						to_page(currentNumPage);
+					}
+				});
+			}
+		})
 		//绑定增加设备按钮
-		$("eq_add_modal_btn").click(
+		$("#eq_add_modal_btn").click(
 				function() {
 					$("#eqAddModal form")[0].reset();
 					$("#eqAddModal form").find("*").removeClass(
@@ -216,10 +241,34 @@
 					});
 
 				});
-		//校验信息显示函数
+		function validate_add_form() {
+			//首先要拿到数据，使用正则表达式
+			//验证手机号是否正常
+			var IP = $("#eqAddress_add_input").val();
+			var regIP = /^(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])$/;
+			if (!regIP.test(IP)) {
+				show_validate_msg("#eqAddress_add_input", "error", "IP地址不符合规则！");
+				return false;
+			} else {
+				show_validate_msg("#eqAddress_add_input", "success",
+						"IP地址符合规则！");
+			}
+			var port = $("#eqPort_add_input").val();
+			var regPort = /^([0-9]|[1-9]\d{1,3}|[1-5]\d{4}|6[0-5]{2}[0-3][0-5])$/;
+			if (!regPort.test(port)) {
+				//alert("邮箱格式不符合规则！");
+				//取消使用弹窗的方式进行提醒，美化校验结果。
+				show_validate_msg("#eqPort_add_input", "error", "端口值错误！");
+				return false;
+			} else {
+				show_validate_msg("#eqPort_add_input", "success", "端口值符合规则！");
+			}
+			return true;
+		}
+		//校验信息显示函数  has-error has-success用户设置在div标签上
 		function show_validate_msg(element, status, msg) {
 			//清除元素的校验状态
-			$(element).removeClass("has-success has-error");
+			$(element).parent().removeClass("has-success has-error");
 			$(element).next("span").text(" ");
 			if ("success" == status) {
 				$(element).parent().addClass("has-success");
@@ -231,77 +280,42 @@
 		}
 		//为保存按钮添加事件
 		setTimeout(function() {
-			$("#eq_save_btn")
-					.click(
-							function() {
-								//提交表单数据保存
-								//先提交给服务器进行数据校验，这边是前端校验，即使绕过前段校验，还有后端JSR303校验
-								if (!validate_add_form()) {
-									return false;
-								}
-								//在执行ajax请求，首先要拿到ajax请求的校验值
-								if ($(this).attr("ajax-va") == "error") {
-									return false;
-								}
-								$
-										.ajax({
-											url : "${APP_PATH}/equip",
-											type : "POST",
-											data : $("#eqAddModal form")
-													.serialize(),
-											success : function(result) {
-												if (result.code == 100) {
-													//保存成功，关闭模态框，跳转到最后一页，显示插入的数据
-													$("#eqAddModal").modal(
-															'hide');
-													to_page(totalRecord);
-												} else {
-													//后台显示信息
-													//console.log(result);
-													//那个字段错误信息就显示那个字段的，这里是后端校验，从后端拿到的校验信息
-													/* EmployeeController中定义了email,empName的校验，如果出现错误errorFields中就会
-													出现email，如果没有错误就是出现undefined  */
-													if (undefined != result.extend.errorFields.userName) {
-														show_validate_msg(
-																"#userName_add_input",
-																"error",
-																result.extend.errorFields.userName);
-													}
-													if (undefined != result.extend.errorFields.userOrigin) {
-														show_validate_msg(
-																"#userOrigin_add_input",
-																"error",
-																result.extend.errorFields.userOrigin);
-													}
-													if (undefined != result.extend.errorFields.userPhone) {
-														show_validate_msg(
-																"#userPhone_add_input",
-																"error",
-																result.extend.errorFields.userPhone);
-													}
-													if (undefined != result.extend.errorFields.userEmail) {
-														show_validate_msg(
-																"#userEmail_add_input",
-																"error",
-																result.extend.errorFields.userEmail);
-													}
-													if (undefined != result.extend.errorFields.userQQ) {
-														show_validate_msg(
-																"#userQQ_add_input",
-																"error",
-																result.extend.errorFields.userQQ);
-													}
-													if (undefined != result.extend.errorFields.userWechat) {
-														show_validate_msg(
-																"#userWechat_add_input",
-																"error",
-																result.extend.errorFields.userWechat);
-													}
-
-												}
-											}
-										});
-							});
+			$("#eq_save_btn").click(function() {
+				//提交表单数据保存
+				//先提交给服务器进行数据校验，这边是前端校验，即使绕过前段校验，还有后端JSR303校验
+				if (!validate_add_form()) {
+					return false;
+				}
+				//在执行ajax请求，首先要拿到ajax请求的校验值
+				if ($(this).attr("ajax-va") == "error") {
+					return false;
+				}
+				$.ajax({
+					url : "${APP_PATH}/equip",
+					type : "POST",
+					data : $("#eqAddModal form").serialize(),
+					success : function(result) {
+						if (result.code == 100) {
+							//保存成功，关闭模态框，跳转到最后一页，显示插入的数据
+							$("#eqAddModal").modal('hide');
+							to_page(totalRecord);
+						} else {
+							//后台显示信息
+							//console.log(result);
+							//那个字段错误信息就显示那个字段的，这里是后端校验，从后端拿到的校验信息
+							/* EmployeeController中定义了email,empName的校验，如果出现错误errorFields中就会
+							出现email，如果没有错误就是出现undefined  */
+							/* if (undefined != result.extend.errorFields.eqName) {
+								show_validate_msg(
+										"#userName_add_input",
+										"error",
+										result.extend.errorFields.userName);
+							} */
+							alert("添加设备不成功，请检查数据！");
+						}
+					}
+				});
+			});
 		});
 		//为编辑按钮绑定事件，但是页面首先加载完成后，发送ajax请求得到数据后才显示出编辑删除按钮，所以直接.click（）方法绑定不上。
 		//JQuery有live方法，新的版本没有live方法，用on方法代替。
@@ -335,6 +349,7 @@
 			var eqId = $(this).attr("del-id");
 			if (confirm("确认删除【" + eqName + "】吗？")) {
 				//去人删除ajax请求。
+				//alert(eqId);
 				$.ajax({
 					url : "${APP_PATH}/equip/" + eqId,
 					type : "DELETE",
@@ -353,13 +368,14 @@
 				type : "GET",
 				success : function(result) {
 					//console.log(result);
+					//取的是模态框的对应输入框的id值
 					var eqData = result.extend.equip;
 					$("#eqName_update_input").val(eqData.eqName);
 					$("#eqAddress_update_input").val(eqData.eqAddress);
 					$("#eqPort_update_input").val(eqData.eqPort);
 					$("#eqLoignName_update_input").val(eqData.eqLoginname);
 					$("#eqPassword_update_input").val(eqData.eqLoginpassword);
-					$("#eqLoginMod_update_input").val(eqData.eqLoginmod);
+					$("#eqLoginMode_update_input").val(eqData.eqLoginmod);
 				}
 			})
 		}
@@ -369,19 +385,28 @@
 					.click(
 							function() {
 								//验证邮箱 
-								var userEmail = $("#eqLoignName_update_input")
-										.val();
-								var regEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-								if (!regEmail.test(userEmail)) {
+								var IP = $("#eqAddress_update_input").val();
+								var regIP = /^(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])$/;
+								if (!regIP.test(IP)) {
 									//alert("邮箱格式不符合规则！");
 									show_validate_msg(
-											"#eqLoignName_update_input",
-											"error", "邮箱格式不符合规则！");
+											"#eqAddress_update_input", "error",
+											"IP不符合规则！");
 									return false;
 								} else {
 									show_validate_msg(
-											"#eqLoignName_update_input",
-											"success", "邮箱格式符合规则！");
+											"#eqAddress_update_input",
+											"success", "IP符合规则！");
+								}
+								var Port = $("#eqPort_update_input").val();
+								var regPort = /^([0-9]|[1-9]\d{1,3}|[1-5]\d{4}|6[0-5]{2}[0-3][0-5])$/;
+								if (!regPort.test(Port)) {
+									show_validate_msg("#eqPort_update_input",
+											"error", "端口设置错误！");
+									return false;
+								} else {
+									show_validate_msg("#eqPort_update_input",
+											"success", "端口符合规则！");
 								}
 								//发送ajax请求，保存更新的信息
 								$
@@ -394,8 +419,8 @@
 											success : function(result) {
 												//alert(result.msg);
 												if (result.code == 100) {
-													$("#eqUpdateModal")
-															.modal("hide");
+													$("#eqUpdateModal").modal(
+															"hide");
 													to_page(currentNumPage);
 												} else {
 													alert("更新失败！");
@@ -411,7 +436,7 @@
 
 				//发送ajax请求，保存更新的信息
 				$.ajax({
-					url : "${APP_PATH}/emp/" + $(this).attr("update-id"),
+					url : "${APP_PATH}/equip/" + $(this).attr("update-id"),
 					type : "PUT",
 					data : $("#eqUpdateModal form").serialize(),
 					success : function(result) {
@@ -444,31 +469,159 @@
 							var flag = $(".check_item:checked").length == $(".check_item").length
 							$("#check_all").prop("checked", flag);
 						});
-		//批量删除
-		$("#eq_delete_all_btn").click(function() {
-			var eqNames = "";//用于显示
-			var eqDelIds = "";//用于标记删除
-			//遍历状态为checked的check_item
-			$.each($(".check_item:checked"), function() {
-				//找到check_item的父元素tr，然后找到第三个td
-				eqNames += $(this).parents("tr").find("td:eq(2)").text() + "，";
-				eqDelIds += $(this).parents("tr").find("td:eq(1)").text() + "_"
-			});
-			//去除字符串最后一位逗号。
-			eqNames = eqNames.substring(0, eqNames.length - 1);
-			eqDelIds = eqDelIds.substring(0, eqDelIds.length - 1);
-			if (confirm("确认这些【" + eqNames + "】都删除吗？")) {
-				$.ajax({
-					url : "${APP_PATH}/usercontacts/" + eqDelIds,
-					type : "DELETE",
-					success : function(result) {
-						alert(result.msg);
-						to_page(currentNumPage);
-					}
-				});
-			}
-		})
 	</script>
 </body>
+<!-- 设备新增模态窗 -->
+<div class="modal fade" id=eqAddModal tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">设备添加</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="eqName_add_input" class="col-sm-2 control-label">设备名称</label>
+						<div class="col-sm-10">
+							<input type="text" name="eqName" class="form-control"
+								id="eqName_add_input"> <span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="epAddress_add_input" class="col-sm-2 control-label">设备IP</label>
+						<div class="col-sm-10">
+							<input type="text" name="eqAddress" class="form-control"
+								id="eqAddress_add_input"> <span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="eqPort_add_input" class="col-sm-2 control-label">端口号</label>
+						<div class="col-sm-10">
+							<input type="text" name="eqPort" class="form-control"
+								id="eqPort_add_input"> <span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="eqLoginName_add_input" class="col-sm-2 control-label">登录名</label>
+						<div class="col-sm-10">
+							<input type="text" name="eqLoginname" class="form-control"
+								id="eqLoginName_add_input"> <span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="eqLoginPass_add_input" class="col-sm-2 control-label">登录密码</label>
+						<div class="col-sm-10">
+							<input type="text" name="eqLoginpassword" class="form-control"
+								id="eqLoginPassword_add_input"> <span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="eqLoginMode_add_input" class="col-sm-2 control-label">登录模式</label>
+						<div class="col-sm-10">
+							<input type="text" name="eqLoginmod" class="form-control"
+								id="eqLoginMode_add_input"> <span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="eqLoginMode_add_input" class="col-sm-2 control-label">登录模式</label>
+						<div class="col-sm-10">
+							<select class="form-control">
+								<option>SSH2</option>
+								<option>Telnet</option>
+								<option>Http</option>
+								<option>Https</option>
+								<option>Telnet/SSL</option>
+								<option>RLogin</option>
+								<option>Serial</option>
+								<option>TAPI</option>
+								<option>RAW</option>
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal"
+					id="eq_close_btn">关闭</button>
+				<button type="button" class="btn btn-primary" id="eq_save_btn">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
 
+<!-- 设备修改模态窗 -->
+<div class="modal fade" id="eqUpdateModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">设备信息修改</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+
+					<div class="form-group">
+						<label for="eqName_update_input" class="col-sm-2 control-label">设备名称</label>
+						<div class="col-sm-10">
+							<input type="text" name="eqName" class="form-control"
+								id="eqName_update_input"> <span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="eqAddress_update_input" class="col-sm-2 control-label">设备IP</label>
+						<div class="col-sm-10">
+							<input type="text" name="eqAddress" class="form-control"
+								id="eqAddress_update_input"> <span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="eqPort_update_input" class="col-sm-2 control-label">端口号</label>
+						<div class="col-sm-10">
+							<input type="text" name="eqPort" class="form-control"
+								id="eqPort_update_input"> <span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="eqLoignName_update_input"
+							class="col-sm-2 control-label">登录名</label>
+						<div class="col-sm-10">
+							<input type="text" name="eqLoginname" class="form-control"
+								id="eqLoignName_update_input"> <span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="eqPassword_update_input"
+							class="col-sm-2 control-label">登录密码</label>
+						<div class="col-sm-10">
+							<input type="text" name="eqLoginpassword" class="form-control"
+								id="eqPassword_update_input"> <span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="eqLoginMode_update_input"
+							class="col-sm-2 control-label">登录方式</label>
+						<div class="col-sm-10">
+							<input type="text" name="eqLoginmod" class="form-control"
+								id="eqLoginMode_update_input"> <span class="help-block"></span>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal"
+					id="eq_close.btn">关闭</button>
+				<button type="button" class="btn btn-primary" id="eq_update_btn">更新</button>
+			</div>
+		</div>
+	</div>
+</div>
 </html>
