@@ -530,16 +530,16 @@
 					<div class="form-group">
 						<label for="eqLoginMode_add_input" class="col-sm-2 control-label">登录模式</label>
 						<div class="col-sm-10">
-							<select class="form-control">
-								<option>SSH2</option>
-								<option>Telnet</option>
-								<option>Http</option>
-								<option>Https</option>
-								<option>Telnet/SSL</option>
-								<option>RLogin</option>
-								<option>Serial</option>
-								<option>TAPI</option>
-								<option>RAW</option>
+							<select class="form-control" name="loginmode">
+								<option value="1">SSH2</option>
+								<option value="1">Telnet</option>
+								<option value="1">Http</option>
+								<option value="1">Https</option>
+								<option value="1">Telnet/SSL</option>
+								<option value="1">RLogin</option>
+								<option value="1">Serial</option>
+								<option value="1">TAPI</option>
+								<option value="1">RAW</option>
 							</select>
 						</div>
 					</div>

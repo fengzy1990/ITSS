@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fengzi.ITSS.bean.Equip;
 import com.fengzi.ITSS.bean.Msg;
 import com.fengzi.ITSS.service.EquipService;
+import com.fengzi.ITSS.service.utilService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -25,6 +27,12 @@ import com.github.pagehelper.PageInfo;
 public class EquipController {
 	@Autowired
 	EquipService equipService;
+
+	@Autowired
+	utilService utilservice;
+	
+	@Autowired
+	HttpServletRequest request;
 
 	/**
 	 * 返回所有设备信息
@@ -39,18 +47,6 @@ public class EquipController {
 		List<Equip> equips = equipService.getAllEquips();
 		PageInfo page = new PageInfo(equips, 10);
 		return Msg.success().add("pageInfo", page);
-	}
-
-	/**
-	 * 登录设备
-	 * 
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/loginEquip/{eqId}", method = RequestMethod.PUT)
-	public Msg loginEquips(@PathVariable("eqId") Integer eqId) {
-		equipService.loginEquip(eqId);
-		return Msg.success();
 	}
 
 	/**
@@ -113,6 +109,19 @@ public class EquipController {
 	@RequestMapping(value = "/equip/{eqId}", method = RequestMethod.PUT)
 	public Msg updateEquip(Equip equip) {
 		equipService.updateEquip(equip);
+		return Msg.success();
+	}
+
+	/**
+	 * 登录设备
+	 * 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/loginEquip/{eqId}", method = RequestMethod.PUT)
+	public Msg loginEquips(@PathVariable("eqId") Integer eqId) {
+		equipService.loginEquip(eqId);
+		System.out.println(utilservice.getIpAddr(request));
 		return Msg.success();
 	}
 

@@ -17,8 +17,8 @@ import com.fengzi.ITSS.dao.EquipMapper;
 public class EquipService {
 	@Autowired
 	private EquipMapper equipMapper;
-	@Value("${jdbc.crt}")
-	public String jdbcrt;
+	@Value("${jdbc.user}")
+	public String jdbcuser;
 
 	// 获得所有设备
 	public List<Equip> getAllEquips() {
@@ -32,8 +32,10 @@ public class EquipService {
 		Equip equip = equipMapper.selectByPrimaryKey(eqId);
 		String ip = equip.getEqAddress();
 		String port = equip.getEqPort();
-		String lname = equip.getEqName();
+		String lname = equip.getEqLoginname();
 		String passwd = equip.getEqLoginpassword();
+		String lmode = equip.getEqLoginmod();
+		System.out.println(ip + passwd + port + lname+lmode);
 
 	}
 

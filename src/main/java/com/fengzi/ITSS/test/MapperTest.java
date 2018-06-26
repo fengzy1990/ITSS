@@ -13,6 +13,7 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.fengzi.ITSS.dao.userLoginMapper;
+import com.fengzi.ITSS.service.utilService;
 
 /**
  * 
@@ -23,12 +24,15 @@ import com.fengzi.ITSS.dao.userLoginMapper;
 @ContextConfiguration(locations = { "classpath:applicationContext.xml" })
 public class MapperTest {
 
-	@Value("${jdbc.crt}")
-	private String jdbcrt;
+	@Value("${jdbc.user}")
+	private String jdbcuser;
 
 	Properties pros = new Properties();
 	InputStream is = PropertiesLoaderUtils.class.getClassLoader().getResourceAsStream("dbconfig.propertise");
-	
+
+	@Autowired
+	utilService utilservice;
+
 	@Autowired
 	userLoginMapper userloginMapper;
 
@@ -37,9 +41,9 @@ public class MapperTest {
 
 	@Test
 	public void TEST_CURD() {
-		System.out.println(jdbcrt);
-		jdbcrt = "abc";
-		System.out.println(jdbcrt);
+		System.out.println(jdbcuser);
+		jdbcuser = "abc";
+		System.out.println(jdbcuser);
 		// 测试数据插入 ，测试通过
 		// userloginMapper.insert(new userLogin(null,"ZHANGSAN"," "," "," "," "," ","
 		// "));

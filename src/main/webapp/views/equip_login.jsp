@@ -92,7 +92,7 @@
 						$("<span></span>").addClass(
 								"glyphicon glyphicon-log-in")).append(" 登录");
 				//为编辑按钮添加自定义属性，可以在更新数据时，知道是哪条数据,不能使用empIdTd，这是一个Object对象
-				loginBtn.attr("login-id", item.id);
+				loginBtn.attr("login-id", item.eqId);
 				var btnTd = $("<td></td>").append(loginBtn);
 				$("<tr></tr>").append(idTd).append(
 						eqNameTd).append(eqAddressTd).append(eqPortTd)
@@ -172,6 +172,7 @@
 			var eqId = $(this).attr("login-id");
 			if (confirm("确认登录IP为【" + eqIP + "】吗？")) {
 				//去人删除ajax请求。
+				alert(eqId);
 				$.ajax({
 					url : "${APP_PATH}/loginEquip/" + eqId,
 					type : "PUT",
