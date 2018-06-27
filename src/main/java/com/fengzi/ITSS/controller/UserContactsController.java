@@ -43,6 +43,18 @@ public class UserContactsController {
 		return Msg.success().add("pageInfo", page);
 	}
 
+	//查询用户信息并返回
+	@ResponseBody
+	@RequestMapping(value="/selectcontacts",method=RequestMethod.GET)
+	public Msg selectUser(@RequestParam(value="args",defaultValue="%")String args) {
+		PageHelper.startPage(1,10);
+		System.out.println("进入到selectcontacts方法");
+		List<UserContacts> userContacts=userContactsService.select_All(args);
+		System.out.println(args);
+		PageInfo page = new PageInfo(userContacts,10);
+		return Msg.success().add("pageInfo", page);
+	}
+	
 	/**
 	 * 增加用户 保存
 	 * 
@@ -110,6 +122,7 @@ public class UserContactsController {
 		UserContacts uContacts = userContactsService.getUserContacts(id);
 		return Msg.success().add("userContacts", uContacts);
 	}
+	
 	//根据id更新用户信息
 	@ResponseBody
 	@RequestMapping(value = "usercontacts/{id}",method=RequestMethod.PUT)

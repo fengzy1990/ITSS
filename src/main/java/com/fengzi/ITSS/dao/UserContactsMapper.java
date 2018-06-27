@@ -18,6 +18,8 @@ public interface UserContactsMapper {
     int insertSelective(UserContacts record);
 
     List<UserContacts> selectByExample(UserContactsExample example);
+    
+    List<UserContacts> selectByArgs(String args);
 
     UserContacts selectByPrimaryKey(Integer id);
 

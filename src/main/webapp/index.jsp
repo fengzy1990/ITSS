@@ -94,7 +94,7 @@ label {
 									<div class="form-group center">
 										<input type="submit" id="login_btn"
 											class="btn btn-primary btn-lg" value="登陆" /> <input
-											type="reset" id="login_btn" class="btn btn-primary btn-lg"
+											type="reset" id="reset_btn" class="btn btn-primary btn-lg"
 											value="重置" />
 									</div>
 								</form>

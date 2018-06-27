@@ -60,6 +60,11 @@ public class UserContactsService {
 		// TODO Auto-generated method stub
 		userContactsMapper.updateByPrimaryKeySelective(uContacts);
 	}
+	//按照条件综合查询，根据字段查询出符合条件的数据
+	public List<UserContacts> select_All(String args) {
+		// TODO Auto-generated method stub
+		return userContactsMapper.selectByArgs(args);
+	}
 	
 
 }

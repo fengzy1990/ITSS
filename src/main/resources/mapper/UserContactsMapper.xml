@@ -87,6 +87,15 @@
       order by ${orderByClause}
     </if>
   </select>
+    <select id="selectByArgs" parameterType="java.lang.String" resultMap="BaseResultMap">
+    
+    select * from usercontacts where 
+    userName like CONCAT('%',#{args,jdbcType=VARCHAR},'%') or 
+    userOrigin like CONCAT('%',#{args,jdbcType=VARCHAR},'%') or 
+    userPhone like CONCAT('%',#{args,jdbcType=VARCHAR},'%') or 
+    userSystem like CONCAT('%',#{args,jdbcType=VARCHAR},'%')
+   
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

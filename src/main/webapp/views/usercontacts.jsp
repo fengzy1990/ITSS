@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
@@ -19,8 +19,8 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<div class="row">
-			<%@ include file="inc/equip_menu.jsp"%>
+		<div class="row" style="background-color: black;">
+			<%@ include file="inc/top.jsp"%>
 		</div>
 		<div class="row">
 			<!-- 搭建显示页面 -->
@@ -38,9 +38,9 @@
 						<!--页面的搜索框-->
 						<div class="navbar-form navbar-left visible-lg-block">
 							<div class="input-group">
-								<input type="text" class="form-control" placeholder="输入关键字">
+								<input type="text" id="user_select_input" class="form-control" placeholder="输入关键字">
 								<span class="input-group-btn">
-									<button class="btn btn-success">搜索</button>
+									<button class="btn btn-success" id="user_select_btn">搜索</button>
 									<button type="button" class="btn btn-primary"
 										id="user_add_modal_btn">新增</button>
 									<button type="button" class="btn btn-danger"
@@ -602,6 +602,23 @@
 								});
 							}
 						})
+		//查询
+		$("#user_select_btn").click(
+				function(){
+					var args=$("#user_select_input").val();
+					//alert(args);
+					$.ajax({
+						url:"${APP_PATH}/selectcontacts",
+						data : "args=" + args,
+						type:"GET",
+						success: function(result){
+							build_users_table(result);
+							build_page_info(result);
+							build_page_nav(result);
+							
+						}
+					})
+				})
 	</script>
 </body>
 <!-- 员工新增模态窗 -->
