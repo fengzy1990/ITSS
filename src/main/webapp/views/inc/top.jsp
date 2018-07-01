@@ -24,7 +24,7 @@
 				height="60" align="middle" /></td>
 			<td align="center" class="trtd">自主创新平台</td>
 			<td align="center" style="color: #ffffff;">当前用户：<%=session.getAttribute("SESSION_USER")%>
-				|<a href="userLogout">注销</a>
+				|<a href="${APP_PATH}/userLogout">注销</a>
 			</td>
 		</tr>
 	</table>

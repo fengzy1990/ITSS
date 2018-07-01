@@ -54,7 +54,7 @@
 				<!-- 表格数据 -->
 				<div class="row">
 					<div class="col-md-12">
-						<table class="table table-hover" id="users_table">
+						<table class="table table-hover table-condensed" id="users_table">
 							<thead>
 								<tr>
 									<th><input type="checkbox" id="check_all" /></th>
@@ -291,7 +291,7 @@
 		//校验信息显示函数
 		function show_validate_msg(element, status, msg) {
 			//清除元素的校验状态
-			$(element).removeClass("has-success has-error");
+			$(element).parent().removeClass("has-success has-error");
 			$(element).next("span").text(" ");
 			if ("success" == status) {
 				$(element).parent().addClass("has-success");
