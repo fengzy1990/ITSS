@@ -25,6 +25,8 @@
 		<property name="driverClass" value="${jdbc.driverClass}"></property>
 		<property name="user" value="${jdbc.user}"></property>
 		<property name="password" value="${jdbc.password}"></property>
+		<property name="testConnectionOnCheckin" value="false"></property>
+		<property name="testConnectionOnCheckout" value="true"></property>
 	</bean>
 	<!-- ======================================数据源，事务控制等核心业务结束 -->
 

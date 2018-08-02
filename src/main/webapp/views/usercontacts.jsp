@@ -38,8 +38,8 @@
 						<!--页面的搜索框-->
 						<div class="navbar-form navbar-left visible-lg-block">
 							<div class="input-group">
-								<input type="text" id="user_select_input" class="form-control" placeholder="输入关键字">
-								<span class="input-group-btn">
+								<input type="text" id="user_select_input" class="form-control"
+									placeholder="输入关键字"> <span class="input-group-btn">
 									<button class="btn btn-success" id="user_select_btn">搜索</button>
 									<button type="button" class="btn btn-primary"
 										id="user_add_modal_btn">新增</button>
@@ -86,24 +86,49 @@
 	</div>
 	<script type="text/javascript">
 		var totalRecord, currentNumPage;//用来调用增加完数据后，用记录数作为页码，这样pageinfo总会显示最后一页
+		var fun = "allusercontacts";//进入页面默认为所有用户
+		
 		//页面加载完成后，发送ajax请求，得到分页数据
 		$(function() {
-			to_page(1);
+			to_page(fun, 1);
 
 		});
-		function to_page(pn) {
-			$.ajax({
-				url : "${APP_PATH}/allusercontacts",
-				data : "pn=" + pn,
-				type : "GET",
-				success : function(result) {
-					//console.log(result);
-					//请求成功后，解析json,显示员工和分页信息
-					build_users_table(result);
-					build_page_info(result);
-					build_page_nav(result);
-				}
-			});
+		function to_page(fun, pn) {
+			var vargs = $("#user_select_input").val();
+			//alert(vargs);
+			//alert(pn);
+			if (fun == "allusercontacts") {
+				$.ajax({
+					url : "${APP_PATH}/allusercontacts",
+					data : "pn=" + pn,
+					type : "GET",
+					success : function(result) {
+						//console.log(result);
+						//请求成功后，解析json,显示员工和分页信息
+						build_users_table(result);
+						build_page_info(result);
+						build_page_nav(result);
+					}
+				});
+			} else if (fun == "selectcontacts") {
+				$.ajax({
+					url : "${APP_PATH}/selectcontacts",
+					data : {
+						args : vargs,
+						pn : pn
+					},
+					dataType:"json",
+					type : "GET",
+					success : function(result) {
+						//console.log(result);
+						//请求成功后，解析json,显示员工和分页信息
+						build_users_table(result);
+						build_page_info(result);
+						build_page_nav(result);
+					}
+				});
+			}
+
 		}
 		//显示每条职工数据函数
 		function build_users_table(result) {
@@ -190,10 +215,10 @@
 			} else {
 				//绑定点击事件
 				firstPageLi.click(function() {
-					to_page(1);
+					to_page(fun, 1);
 				});
 				prePageLi.click(function() {
-					to_page(result.extend.pageInfo.pageNum - 1);
+					to_page(fun, result.extend.pageInfo.pageNum - 1);
 				});
 			}
 			var nextPageLi = $("<li></li>").append(
@@ -205,10 +230,10 @@
 				lastPageLi.addClass("disabled");
 			} else {
 				nextPageLi.click(function() {
-					to_page(result.extend.pageInfo.pageNum + 1);
+					to_page(fun, result.extend.pageInfo.pageNum + 1);
 				});
 				lastPageLi.click(function() {
-					to_page(result.extend.pageInfo.pages);
+					to_page(fun, result.extend.pageInfo.pages);
 				});
 			}
 			ul.append(firstPageLi).append(prePageLi);
@@ -220,7 +245,7 @@
 					numPageLi.addClass("active");
 				}
 				numPageLi.click(function() {
-					to_page(item);
+					to_page(fun, item);
 				});
 				ul.append(numPageLi);
 
@@ -268,7 +293,7 @@
 			//首先要拿到数据，使用正则表达式
 			//验证手机号是否正常
 			var userPhone = $("#userPhone_add_input").val();
-			var regPhone = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+			var regPhone = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
 			if (!regPhone.test(userPhone)) {
 				show_validate_msg("#userPhone_add_input", "error", "手机号不符合规则！");
 				return false;
@@ -352,7 +377,7 @@
 													//保存成功，关闭模态框，跳转到最后一页，显示插入的数据
 													$("#userAddModal").modal(
 															'hide');
-													to_page(totalRecord);
+													to_page(fun, totalRecord);
 												} else {
 													//后台显示信息
 													//console.log(result);
@@ -449,7 +474,7 @@
 					type : "DELETE",
 					success : function(result) {
 						//alert(result.msg);
-						to_page(currentNumPage);
+						to_page(fun, currentNumPage);
 					}
 				});
 
@@ -482,7 +507,7 @@
 								//验证手机号是否正常
 								var userPhone = $("#userPhone_update_input")
 										.val();
-								var regPhone = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+								var regPhone = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
 								if (!regPhone.test(userPhone)) {
 									show_validate_msg(
 											"#userPhone_update_input", "error",
@@ -521,7 +546,7 @@
 												if (result.code == 100) {
 													$("#userUpdateModal")
 															.modal("hide");
-													to_page(currentNumPage);
+													to_page(fun, currentNumPage);
 												} else {
 													alert("更新失败！");
 												}
@@ -543,7 +568,7 @@
 						//alert(result.msg);
 						if (result.code == 100) {
 							$("#userUpdateModal").modal("hide");
-							to_page(currentNumPage);
+							to_page(fun, currentNumPage);
 						} else {
 							alert("更新失败！");
 						}
@@ -597,28 +622,27 @@
 									type : "DELETE",
 									success : function(result) {
 										alert(result.msg);
-										to_page(currentNumPage);
+										to_page(fun, currentNumPage);
 									}
 								});
 							}
 						})
 		//查询
-		$("#user_select_btn").click(
-				function(){
-					var args=$("#user_select_input").val();
-					//alert(args);
-					$.ajax({
-						url:"${APP_PATH}/selectcontacts",
-						data : "args=" + args,
-						type:"GET",
-						success: function(result){
-							build_users_table(result);
-							build_page_info(result);
-							build_page_nav(result);
-							
-						}
-					})
-				})
+		$("#user_select_btn").click(function() {
+			var args = $("#user_select_input").val();
+			fun = "selectcontacts";//当提交为查询后，所有函数调用改向to_page的查询方法
+			$.ajax({
+				url : "${APP_PATH}/selectcontacts",
+				data : "args=" + args,
+				type : "GET",
+				success : function(result) {
+					build_users_table(result);
+					build_page_info(result);
+					build_page_nav(result);
+
+				}
+			})
+		})
 	</script>
 </body>
 <!-- 员工新增模态窗 -->
